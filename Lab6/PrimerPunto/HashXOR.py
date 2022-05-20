@@ -43,4 +43,4 @@ def funcionHash(archivo):
     resultado=bytesBase64(rxor)#conversion a base64
     return resultado
 
-print(funcionHash("hola.txt"))
+print(funcionHash("textoPrueba.txt"))
