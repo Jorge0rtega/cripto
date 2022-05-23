@@ -21,26 +21,21 @@ def funcionHash(archivo):
         mensaje=doc.read()
         doc.close
     msj=bytearray(mensaje)
-    #print(msj)
-    #print(len(msj))
+
     if(len(msj)%4!=0):#completar la cadena de bits para bloques de 32 bits
         for i in range(0, 4-(len(msj)%4)):
             msj.append(0)# agregar para completar
-    #print(len(msj))
-    #print(msj)
+
     i=0
     j=4
     #4bytes de ceros
     rxor=bytearray(b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
     while(i!=len(msj)):
-        #print(rxor)
-        #print(msj[i:j])
         rxor=bytes(a ^ b for (a, b) in zip(rxor, msj[i:j]))#XOR
-        #print(rxor)
         i=i+4
-        j=j+4
-    #print(rxor)   
+        j=j+4  
     resultado=bytesBase64(rxor)#conversion a base64
     return resultado
 
-print(funcionHash("textoPrueba.txt"))
+txt=input("Ingrese el nombre del archivo de texto: ")
+print("Resultado de la funcion hash: ",funcionHash(txt))
