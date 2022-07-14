@@ -1,0 +1,215 @@
+cifradoCBC(textoCifrar, K)
+
+i=0
+j=0
+IV=generar vector de inicializacion
+repetir hasta que se termine la cadena
+	repetir hasta i=64
+		m[j][i]=textoCifrar[i]
+		i=i+1
+	si no completa los 64 bits
+			aplicar padding
+	recortar primeros 64 bits de textoDescifrar 
+	j=j+1
+	
+repetir hasta que no haya bloques de bits
+	i=0
+	j=0
+	Repetir hasta que la cadena se termine
+		Si IV[i] es igual a m[j][i] entonces
+			varXor[i]=0
+		sino
+			varXor[i]=1
+		i=i+1
+	c[j]=cifrar 3DES a varXor con la llave K
+	IV=c[j]
+	j=j+1
+regresar c e IV 
+
+descifradoCBC(textoDescifrar, k, IV) 
+i=0
+j=0
+repetir hasta que se termine la cadena
+	repetir hasta i=64
+		c[j][i]=textoDescifrar[i]
+		i=i+1
+	recortar primeros 64 bits de textoDescifrar
+	j=j+1
+	
+repetir hasta que no haya bloques de bits
+	i=0
+	j=0
+	auxC= descifrar 3DES a c[j] con la llave K
+	Repetir hasta que la cadena se termine
+		Si IV[i] es igual a auxC[i] entonces
+			m[j][i]=0
+		sino
+			m[j][i]=1
+		i=i+1
+	IV=c[j]
+	j=j+1
+regresar m
+
+cifradoCTR(textoCifrar, k) 
+	
+i=0
+j=0
+repetir hasta que se termine la cadena
+	repetir hasta i=64
+		m[j][i]=textoCifrar[i]
+		i=i+1
+	si no completa los 64 bits
+			aplicar padding
+	recortar primeros 64 bits de textoDescifrar 
+	j=j+1
+	
+repetir hasta que no haya bloques de bits
+	x=bloqueContador
+	i=0
+	j=0
+	cont=cifrar 3DES a x la llave K
+	Repetir hasta que la cadena se termine
+		Si cont[i] es igual a m[j][i] entonces
+			c[j][i]=0
+		sino
+			c[j][i]=1
+		i=i+1
+	j=j+1
+	x=x+1
+regresar c
+
+descifradoCTR(textoDescifrar, K) 
+i=0
+j=0
+repetir hasta que se termine la cadena
+	repetir hasta i=64
+		c[j][i]=textoDescifrar[i]
+		i=i+1
+	recortar primeros 64 bits de textoDescifrar
+	j=j+1
+	
+repetir hasta que no haya bloques de bits
+	x=bloqueContador
+	i=0
+	j=0
+	cont=cifrar 3DES a x la llave K
+	Repetir hasta que la cadena se termine
+		Si c[i] es igual a cont[j][i] entonces
+			m[j][i]=0
+		sino
+			m[j][i]=1
+		i=i+1
+	x=x+1
+	j=j+1
+regresar m
+
+
+cifradoCFB(textoCifrar, K)
+
+i=0
+j=0
+IV=generar vector de inicializacion
+repetir hasta que se termine la cadena
+	repetir hasta i=64
+		m[j][i]=textoCifrar[i]
+		i=i+1
+	si no completa los 64 bits
+			aplicar padding
+	recortar primeros 64 bits de textoDescifrar 
+	j=j+1
+	
+repetir hasta que no haya bloques de bits
+	i=0
+	j=0
+	auxIV=cifrar 3DES a IV con la llave K		
+	Repetir hasta que la cadena se termine
+		Si auxIV[i] es igual a m[j][i] entonces
+			varXor[i]=0
+		sino
+			varXor[i]=1
+		i=i+1
+	c[j]=varXor
+	IV=c[j]
+	j=j+1
+regresar c e IV 
+
+
+descifradoCFB(textoDescifrar, k, IV) 
+i=0
+j=0
+repetir hasta que se termine la cadena
+	repetir hasta i=64
+		c[j][i]=textoDescifrar[i]
+		i=i+1
+	recortar primeros 64 bits de textoDescifrar
+	j=j+1
+	
+repetir hasta que no haya bloques de bits
+	i=0
+	j=0
+	auxIV= cifrar 3DES a IV con la llave K
+	Repetir hasta que la cadena se termine
+		Si c[j][i] es igual a auxIV[i] entonces
+			m[j][i]=0
+		sino
+			m[j][i]=1
+		i=i+1
+	IV=c[j]
+	j=j+1
+regresar m
+
+
+cifradoOFB(textoCifrar, K)
+
+i=0
+j=0
+IV=generar vector de inicializacion
+repetir hasta que se termine la cadena
+	repetir hasta i=64
+		m[j][i]=textoCifrar[i]
+		i=i+1
+	si no completa los 64 bits
+			aplicar padding
+	recortar primeros 64 bits de textoDescifrar 
+	j=j+1
+	
+repetir hasta que no haya bloques de bits
+	i=0
+	j=0
+	auxIV=cifrar 3DES a IV con la llave K
+	IV=auxIV		
+	Repetir hasta que la cadena se termine
+		Si aux[i] es igual a m[j][i] entonces
+			c[j][i]=0
+		sino
+			c[j][i]=1
+		i=i+1
+	j=j+1
+regresar c e IV 
+
+
+descifradoOFB(textoDescifrar, k, IV) 
+i=0
+j=0
+repetir hasta que se termine la cadena
+	repetir hasta i=64
+		c[j][i]=textoDescifrar[i]
+		i=i+1
+	recortar primeros 64 bits de textoDescifrar
+	j=j+1
+	
+repetir hasta que no haya bloques de bits
+	i=0
+	j=0
+	auxIV= cifrar 3DES a IV con la llave K
+	IV=auxIV
+	Repetir hasta que la cadena se termine
+		Si c[j][i] es igual a auxIV entonces
+			m[j][i]=0
+		sino
+			m[j][i]=1
+		i=i+1
+	j=j+1
+regresar m
+
+
